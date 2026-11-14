@@ -9,7 +9,7 @@
 <style>
   /* ============================================================
      EDIT THESE VALUES TO CUSTOMIZE THE PAGE
-     (Ticket number and auto-refresh are set in the script at the bottom)
+     (Auto-refresh is set in the script at the bottom)
      ============================================================ */
   :root {
     --bg: #0F172A;
@@ -256,34 +256,19 @@
   <section class="grid">
     <div class="card">
       <h2>What happened?</h2>
-      <p>The Managed Firewall management portal is temporarily offline for <strong>scheduled maintenance</strong>, which may include firmware upgrades, IPS signature and policy updates, and infrastructure hardening.</p>
-      <p>Firewall protection itself is <strong>not affected</strong>. Traffic inspection and existing security policies stay in force. Only portal access, reporting and configuration changes are paused.</p>
+      <p>The Managed Firewall Management Portal is temporarily unavailable due to <strong>scheduled maintenance</strong>, which may include security and system updates.</p>
+      <p>During this maintenance period, portal access, report generation, and automation changes may be temporarily unavailable.</p>
     </div>
 
     <div class="card">
       <h2>What can I do?</h2>
-      <p>No action is needed on your side. Please try again after the maintenance window. For urgent security incidents, contact the NOC/SOC directly.</p>
-      <ul class="checklist" aria-label="Maintenance progress">
-        <li class="li-done"><svg><use href="#i-circle-check"/></svg>Pre-maintenance config backup</li>
-        <li class="li-active"><svg><use href="#i-spinner"/></svg>Firmware &amp; signature updates</li>
-        <li class="li-pending"><svg><use href="#i-circle"/></svg>Post-change validation &amp; health checks</li>
-        <li class="li-pending"><svg><use href="#i-circle"/></svg>Portal access restored</li>
-      </ul>
+      <p>No action is required on your side. Please try again after the maintenance window has been completed.</p>
       <div class="actions">
         <button class="btn btn-primary" type="button" onclick="location.reload()"><svg><use href="#i-refresh"/></svg>Retry now</button>
       </div>
     </div>
   </section>
 </main>
-
-<footer>
-  <div class="footer-inner">
-    <span>Reference ID: <b id="refId">&mdash;</b></span>
-    <span>Change Ticket: <b id="ticketId">&mdash;</b></span>
-    <span>Status: <b>503 Service Unavailable</b></span>
-    <span>Managed Firewall &middot; MFW-NOC</span>
-  </div>
-</footer>
 
 <script>
   /* ============================================================
@@ -293,7 +278,6 @@
   var CONFIG = {
     timeZone:         "Asia/Manila",
     tzLabel:          "PHT (GMT+8)",
-    changeTicket:     "CHG-0000000",
     autoRefreshSec:   300           /* 0 to disable auto-reload */
   };
 
@@ -303,14 +287,6 @@
       if (withDate) { opts.year = "numeric"; opts.month = "short"; opts.day = "2-digit"; }
       return d.toLocaleString("en-US", opts);
     }
-
-    // Reference ID (Ray-ID style, random hex)
-    var hex = "";
-    var buf = new Uint8Array(8);
-    (window.crypto || window.msCrypto).getRandomValues(buf);
-    for (var i = 0; i < buf.length; i++) hex += ("0" + buf[i].toString(16)).slice(-2);
-    document.getElementById("refId").textContent = hex.toUpperCase();
-    document.getElementById("ticketId").textContent = CONFIG.changeTicket;
 
     function tick() {
       document.getElementById("nowStamp").textContent =
